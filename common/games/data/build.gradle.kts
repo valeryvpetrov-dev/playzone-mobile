@@ -10,6 +10,7 @@ kotlin {
             dependencies {
                 api(project(":common:games:api"))
                 implementation(project(":common:core"))
+                implementation(project(":common:auth:api"))
             }
         }
     }

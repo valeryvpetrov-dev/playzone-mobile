@@ -23,4 +23,6 @@ class AuthRepositoryImpl(
     override fun isUserLoggedIn(): Boolean {
         return cacheDataSource.fetchToken().isNotBlank()
     }
+
+    override fun getToken(): String = cacheDataSource.fetchToken()
 }

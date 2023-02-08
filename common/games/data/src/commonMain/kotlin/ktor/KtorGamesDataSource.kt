@@ -1,17 +1,23 @@
 package ktor
 
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import AuthRepository
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.path
 import ktor.models.KtorSearchGame
 import ktor.models.KtorSearchRequest
-import models.Game
 
-class KtorGamesDataSource(private val httpClient: HttpClient) {
+class KtorGamesDataSource(
+    private val httpClient: HttpClient,
+    private val authRepository: AuthRepository,
+) {
     suspend fun fetchAllGames(): List<KtorSearchGame> {
+        val token = authRepository.getToken()
         return httpClient.post {
-            header("Bearer-Authorization", "2bac6ef1-ca6d-42ca-96f3-923c68e88eca")
+            header("Bearer-Authorization", token)
 
             url {
                 path("games/search")
@@ -21,8 +27,9 @@ class KtorGamesDataSource(private val httpClient: HttpClient) {
     }
 
     suspend fun searchGame(query: String): List<KtorSearchGame> {
+        val token = authRepository.getToken()
         return httpClient.post {
-            header("Bearer-Authorization", "2bac6ef1-ca6d-42ca-96f3-923c68e88eca")
+            header("Bearer-Authorization", token)
 
             url {
                 path("games/search")
