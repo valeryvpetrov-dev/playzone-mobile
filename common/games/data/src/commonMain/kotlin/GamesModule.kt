@@ -4,7 +4,7 @@ import sqldelight.SqlDelightGamesDataSource
 
 val gamesModule = DI.Module("gamesModule") {
     bind<KtorGamesDataSource>() with provider {
-        KtorGamesDataSource(instance())
+        KtorGamesDataSource(instance(), instance())
     }
 
     bind<SqlDelightGamesDataSource>() with provider {
